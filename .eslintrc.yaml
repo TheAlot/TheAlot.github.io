@@ -18,6 +18,7 @@ ignorePatterns:
   - "node_modules"
   - "dist"
   - "vite.config.ts"
+  - "commitlint.config.js"
 rules:
   react/function-component-definition: off
   react/react-in-jsx-scope: off
