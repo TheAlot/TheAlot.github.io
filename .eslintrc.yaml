@@ -1,24 +1,22 @@
+parser: "@typescript-eslint/parser"
+plugins:
+  - "svelte3"
+  - "@typescript-eslint"
+overrides:
+  - processor: "svelte3/svelte3"
+    files:
+      - "*.svelte"
+extends:
+  - airbnb-base
+  - plugin:@typescript-estlint/recommended
+rules:
+  "import/no-extraneous-dependencies": "off"
+  "@typescript-eslint/no-unused-vars":
+    - warn
+    - argsIgnorePattern: "^_"
+    - "import/prefer-default-export": "off"
+    - "import/no-mutable-exports": "off"
+settings:
+  "svelte3/typescript": true
 env:
   browser: true
-parserOptions:
-  ecmaVersion: 2015
-  sourceType: module
-  project: ./tsconfig.json
-parser: "@typescript-eslint/parser"
-
-plugins:
-  - "@typescript-eslint"
-  - prettier
-extends:
-  - airbnb
-  - airbnb-typescript
-  - plugin:@typescript-eslint/recommended
-  - prettier
-ignorePatterns:
-  - "node_modules"
-  - "dist"
-  - "vite.config.ts"
-  - "commitlint.config.js"
-rules:
-  react/function-component-definition: off
-  react/react-in-jsx-scope: off
