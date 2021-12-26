@@ -3,7 +3,11 @@
 </script>
 
 <main>
-  <AwesomeButton />
+  <AwesomeButton
+    onClick={() => {
+      console.log('parent click');
+    }}
+  />
 </main>
 
 <style>

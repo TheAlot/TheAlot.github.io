@@ -1,9 +1,19 @@
 <script lang="ts">
+  import svelte from 'svelte';
+
   export let title = 'Button';
   export let height = '1.25em 2em';
+  export let type = 'primary';
+  export let size = 'auto';
+  export let disabled = false;
+  export let visible = true;
+  export let ripple = false;
+  export let onClick: svelte.JSX.MouseEventHandler<HTMLButtonElement>;
 </script>
 
-<button style="--height:{height}">{title}</button>
+<button style="--height:{height}" on:click={onClick}>
+  {title}
+</button>
 
 <style>
   button {
