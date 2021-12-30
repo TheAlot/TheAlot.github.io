@@ -7,10 +7,10 @@
     "deploy": "gh-pages -d dist",
     "predeploy": "yarn build",
     "dev": "vite",
-    "build": "yarn check && vite build",
+    "build": "yarn check-ts && vite build",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.svelte",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "check-ts": "svelte-check --tsconfig ./tsconfig.json",
     "prepare": "husky install"
   },
   "dependencies": {},

@@ -20,3 +20,5 @@ settings:
   "svelte3/typescript": true
 env:
   browser: true
+globals:
+  svelte: readonly
