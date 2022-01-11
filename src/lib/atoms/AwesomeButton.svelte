@@ -1,8 +1,7 @@
 <script lang="ts">
   const { log } = console;
-
   export let title = 'Button';
-  export let height = '1.25em 2em';
+  export let loadingText = 'Wait';
   export let type = 'primary';
   export let size = 'auto';
   export let disabled = false;
@@ -13,67 +12,30 @@
   ) => {
     log(type, size, disabled, visible, ripple);
   };
+  export let loading = false;
+
+  let button: HTMLButtonElement;
+
+  let mousePos = 'middle';
+
+  const onMouseMove: svelte.JSX.MouseEventHandler<HTMLButtonElement> = (
+    event,
+  ) => {
+    const { left } = button.getBoundingClientRect();
+    const width = button.offsetWidth;
+    if (event.pageX < left + width * 0.3) {
+      mousePos = 'left';
+    } else if (event.pageX > left + width * 0.65) {
+      mousePos = 'right';
+    } else {
+      mousePos = 'middle';
+    }
+    log(mousePos);
+  };
 </script>
 
-<button style="--height:{height}" on:click={onClick}>
-  {title}
+<button bind:this={button} on:click={onClick} on:mousemove={onMouseMove}>
+  {loading ? loadingText : title}
 </button>
 
-<style>
-  button {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    outline: none;
-    border: 0;
-    vertical-align: middle;
-    text-decoration: none;
-    font-size: inherit;
-    font-family: inherit;
-    font-weight: 600;
-    color: #382b22;
-    text-transform: uppercase;
-    padding: var(--height);
-    background: #fff0f0;
-    border: 2px solid #b18597;
-    border-radius: 0.75em;
-    transform-style: preserve-3d;
-    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
-      background 150ms cubic-bezier(0, 0, 0.58, 1);
-  }
-
-  button::before {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #f9c4d2;
-    border-radius: inherit;
-    box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 #ffe3e2;
-    transform: translate3d(0, 0.75em, -1em);
-    transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
-      box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
-  }
-
-  button:hover {
-    background: #ffe9e9;
-    transform: translate(0, 0.25em);
-  }
-
-  button:hover::before {
-    box-shadow: 0 0 0 2px #b18597, 0 0.5em 0 0 #ffe3e2;
-    transform: translate3d(0, 0.5em, -1em);
-  }
-  button:active {
-    background: #ffe9e9;
-    transform: translate(0em, 0.75em);
-  }
-  button:active::before {
-    box-shadow: 0 0 0 2px #b18597, 0 0 #ffe3e2;
-    transform: translate3d(0, 0, -1em);
-  }
-</style>
+<style src="./style.scss"></style>
