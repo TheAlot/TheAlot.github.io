@@ -1,5 +1,5 @@
 $default-font-size: 14px;
-$default-height: 48px;
+$default-height: 36px;
 $default-border-radius: 6px;
 $default-font: inherit;
 $default-font-weight: 600;
@@ -9,10 +9,13 @@ $raise-level: 5px;
 $hover-pressure: 2;
 $transform-speed: 0.185s;
 
+$shadow-color: rgba(0, 0, 0, 0.25);
+
 $primary-color: #00b8c4;
 $primary-color-dark: #d0b400;
 $primary-color-light: #ffe11d;
 $primary-color-hover: #00a0ab;
+$primary-color-active: #008791;
 $primary-border: 1px solid #ffe11d;
 
 $secondary-color: #ee3253;
@@ -52,19 +55,53 @@ button {
   &::before {
     position: absolute;
     content: '';
-    width: 100%;
+    width: calc(100% + 2px);
     height: 100%;
     top: 0;
     left: -1px;
     right: 0;
     bottom: 0;
-    border-left: inherit;
-    border-right: inherit;
-    background: $primary-color-light;
+    background: $primary-color-dark;
     border-radius: inherit;
-    transform: translate3d(0, 0.5em, -1em);
-    box-shadow: 0 0.5px #000;
+    transform: translate3d(0em, 0.3em, -1em);
+    box-shadow: 0 0.15em 0 0 $shadow-color;
     transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
       box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+  }
+
+  &.middle {
+    &:hover {
+      background: $primary-color-hover;
+      transform: translate(0em, 0.1em);
+      &::before {
+        box-shadow: 0 0 $shadow-color;
+        transform: translate3d(0, 0.2em, -1em);
+      }
+    }
+    &:active {
+      background: $primary-color-active;
+      transform: translate(0em, 0.3em);
+      &::before {
+        box-shadow: 0 0 $shadow-color;
+        transform: translate3d(0, 0, -1em);
+      }
+    }
+  }
+  &.left {
+    &:hover {
+      background: $primary-color-hover;
+      transform: skew(10deg);
+      &::before {
+        box-shadow: 0 0 $shadow-color;
+      }
+    }
+    &:active {
+      background: $primary-color-active;
+      transform: translate(0em, 0.3em);
+      &::before {
+        box-shadow: 0 0 $shadow-color;
+        transform: translate3d(0, 0, -1em);
+      }
+    }
   }
 }

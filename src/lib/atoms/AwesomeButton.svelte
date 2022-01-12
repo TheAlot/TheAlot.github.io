@@ -34,8 +34,10 @@
   };
 </script>
 
-<button bind:this={button} on:click={onClick} on:mousemove={onMouseMove}>
-  {loading ? loadingText : title}
+<button bind:this={button} on:click={onClick} on:mousemove={onMouseMove} class={mousePos}>
+  <span>
+    {loading ? loadingText : title}
+  </span>
 </button>
 
 <style src="./style.scss"></style>
