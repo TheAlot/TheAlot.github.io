@@ -5,6 +5,9 @@
 </script>
 
 <main>
+  <div>
+    <p>This is the webpage</p>
+  </div>
   <AwesomeButton
     onClick={(_event) => {
       log('button clicked');

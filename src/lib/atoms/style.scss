@@ -42,6 +42,16 @@ $anchor-border: 1px solid #9f2d6a;
   }
 }
 
+@mixin skewShadow($direction) {
+  @if $direction == left {
+    transform: skewY(3deg);
+  } @else if $direction == right {
+    transform: skewY(-3deg);
+  } @else {
+    transform: translate(0, -2px);
+  }
+}
+
 @mixin press {
   background: $primary-color-active;
   transform: translate(0em, 5px);
@@ -50,18 +60,19 @@ $anchor-border: 1px solid #9f2d6a;
 div {
   width: fit-content;
   height: fit-content;
+  position: relative;
 }
 
-span.outer {
+span.shadow {
   background-color: $shadow-color;
   border-radius: $default-border-radius;
   color: transparent;
   position: absolute;
-  padding-left: $horizontal-padding + 2px;
-  padding-right: $horizontal-padding + 2px;
-  height: $default-height + 3px;
-  z-index: -1;
+  height: $default-height;
+  z-index: -2;
   transition: transform 150ms cubic-bezier(0, 0, 0.58, 1);
+  top: 3px;
+  left: 0;
 }
 
 span.inner {
@@ -69,10 +80,15 @@ span.inner {
   height: $default-height;
   background: $primary-color-dark;
   display: inline-block;
+  height: $default-height;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 button {
-  height: 100%;
+  height: $default-height;
   border-radius: $default-border-radius;
   border: $primary-border;
   padding-left: $horizontal-padding;
@@ -95,24 +111,42 @@ button {
   position: relative;
   bottom: 5px;
   &.middle {
-    &:hover + span.outer.middle {
+    &:hover ~ .shadow.middle {
+      @include skewShadow(middle);
+    }
+    &:hover {
       @include skewIt(middle);
+    }
+    &:active ~ .shadow.middle {
+      transform: translate(0, -3px);
     }
     &:active {
       @include press;
     }
   }
   &.left {
+    &:hover ~ .shadow.left {
+      @include skewShadow(left);
+    }
     &:hover {
       @include skewIt(left);
+    }
+    &:active ~ .shadow.left {
+      transform: translate(0, -3px);
     }
     &:active {
       @include press;
     }
   }
   &.right {
+    &:hover ~ .shadow.right {
+      @include skewShadow(right);
+    }
     &:hover {
       @include skewIt(right);
+    }
+    &:active ~ .shadow.right {
+      transform: translate(0, -3px);
     }
     &:active {
       @include press;

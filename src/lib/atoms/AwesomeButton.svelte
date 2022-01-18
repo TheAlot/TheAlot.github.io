@@ -30,22 +30,26 @@
     } else {
       mousePos = 'middle';
     }
-    log(mousePos);
   };
 </script>
 
 <div>
-  <span class={`inner ${mousePos}`}>
-    <button
-      bind:this={button}
-      on:click={onClick}
-      on:mousemove={onMouseMove}
-      class={mousePos}
-    >
-      {loading ? loadingText : mousePos}
-    </button>
-  </span>
-  <span class={`outer ${mousePos}`}> {loading ? loadingText : mousePos}</span>
+  <button
+    bind:this={button}
+    on:click={onClick}
+    on:mousemove={onMouseMove}
+    class={mousePos}
+  >
+    {loading ? loadingText : title}
+  </button>
+  <span
+    class={`inner ${mousePos}`}
+    style={`width:${button ? `${button.offsetWidth}px` : 0}`}
+  />
+  <span
+    class={`shadow ${mousePos}`}
+    style={`width:${button ? `${button.offsetWidth}px` : 0}`}
+  />
 </div>
 
 <style src="./style.scss"></style>
