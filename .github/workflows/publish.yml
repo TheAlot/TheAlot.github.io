@@ -13,7 +13,7 @@ jobs:
           node-version: "16"
           cache: pnpm
       - name: Install dependencies 
-        run: pnpm --frozen-lockfile
+        run: pnpm i --frozen-lockfile
       - name: Deploy with gh-pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
