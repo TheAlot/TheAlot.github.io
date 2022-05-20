@@ -11,12 +11,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16"
-          cache: yarn
+          cache: pnpm
       - name: Install dependencies 
-        run: yarn --frozen-lockfile
+        run: pnpm --frozen-lockfile
       - name: Deploy with gh-pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          yarn deploy -u "github-actions-bot <support+actions@github.com>"
+          pnpm deploy -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
