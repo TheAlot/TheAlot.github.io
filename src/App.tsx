@@ -1,7 +1,7 @@
 import { Component } from 'solid-js';
 import { Navbar } from './components/navbar';
 const App: Component = () => {
-  // test comment
+  // test comment 2
   return (
     <div class="flex">
       <Navbar />
