@@ -4,9 +4,11 @@
   "description": "",
   "scripts": {
     "dev": "vite",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "pnpm build",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "check": "tsc",
     "postinstall": "husky install"
   },
