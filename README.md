@@ -1,21 +1,34 @@
-# Public website
+## Usage
 
-Will contain random stuff that i want to play around with or can use in some way or another
+Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
 
+This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
 
-## Todolist
+```bash
+$ npm install # or pnpm install or yarn install
+```
 
-- Create a closable side drawer optimized for phone displays
-- Use a svelte ui library
-- Include routing
-- Create an input that matches the button
-- Make the button an actual replica of the awesome react button component (should take inputs corresponding to the react component)
-- Make the button using other CSS tools
-  - Styled components
-  - Scss
-  - Sass?
-- Learn how to type style props to a component (how to tell typescript that padding is a string like '1em 2em 3em 4em')
+### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
 
-## Issues i have with current development of svelte
+## Available Scripts
 
-- It is not possible to lint the `<style>` tag of components with eslint unless you use pure CSS. If you want to use the fx SCSS you need to either tell eslint to ignore the `<style>` part of your .svelte files or move the style into another file and point to that: `<style src="./style.scss"></style>`.
+In the project directory, you can run:
+
+### `npm dev` or `npm start`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br>
+
+### `npm run build`
+
+Builds the app for production to the `dist` folder.<br>
+It correctly bundles Solid in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
+
+## Deployment
+
+You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
