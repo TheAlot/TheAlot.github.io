@@ -3,6 +3,7 @@ import { SiDungeonsanddragons } from 'solid-icons/si';
 import { BiMath } from 'solid-icons/bi';
 import { useLocation, useNavigate } from 'solid-app-router';
 import { AiFillFire } from 'solid-icons/ai';
+import Space from '../space';
 
 // Currently the preferred way to make dynamic classnames in tailwind, this is called a lookup table
 const whiteBar = {
@@ -22,15 +23,14 @@ const SidebarIcon: Component<{
 }> = (_props) => {
   const props = mergeProps({ tooltip: 'Default' }, _props);
   const navigate = useNavigate();
-  const pathname = createMemo(() => useLocation().pathname)
+  const pathname = createMemo(() => useLocation().pathname);
   return (
     <div class="relative">
       <div
-        class={`peer flex items-center cursor-pointer justify-center h-20 w-20 my-2 mx-auto shadow-lg  
-        hover:bg-green-600 hover:text-white hover:rounded-xl 
-        ${square[pathname() === props.route ? 'y' : 'n']} 
-        active:translate-y-1 
-        transition-all duration-100 ease-linear`}
+        class={`peer my-2 mx-auto flex h-20 w-20 cursor-pointer items-center justify-center shadow-lg  
+          hover:rounded-xl hover:bg-green-600 hover:text-white 
+          ${square[pathname() === props.route ? 'y' : 'n']} 
+          transition-all duration-100 ease-linear active:translate-y-1`}
         tabindex={0}
         onClick={() => {
           navigate(props.route);
@@ -40,16 +40,16 @@ const SidebarIcon: Component<{
       </div>
 
       <span
-        class="absolute w-auto p-2 m-2 min-w-max left-28 top-5 scale-0 rounded-md shadow-md text-white bg-gray-900 text-md font-bold origin-left
-          transition-all duration-100 peer-hover:scale-100 select-none"
+        class="text-md absolute left-28 top-5 m-2 w-auto min-w-max origin-left scale-0 select-none rounded-md bg-gray-900 p-2 font-bold text-white
+          shadow-md transition-all duration-100 peer-hover:scale-100"
       >
         {props.tooltip}
       </span>
       <span
-        class={`absolute origin-center bg-white h-6 w-2 rounded-md top-9
-        peer-hover:-left-1
-        peer-active:scale-y-[2]
-        ${pathname() === props.route ? whiteBar.y : whiteBar.n}
+        class={`absolute top-9 h-6 w-2 origin-center rounded-md bg-white
+          peer-hover:-left-1
+          peer-active:scale-y-[2]
+          ${pathname() === props.route ? whiteBar.y : whiteBar.n}
           transition-all duration-75 ease-linear`}
       />
     </div>
@@ -57,9 +57,9 @@ const SidebarIcon: Component<{
 };
 export const Navbar: Component = () => {
   return (
-    <div class="sticky top-0 left-0 h-screen w-28 flex flex-col bg-gray-900 text-white shadow-lg first:pt-2 last:pb-2">
+    <div class="sticky z-20 top-0 left-0 flex h-screen w-28 flex-col bg-gray-900 text-white shadow-lg first:pt-2 last:pb-2">
       <SidebarIcon icon={<AiFillFire size={42} />} tooltip="Home" route="/" />
-      <span class="h-1 relative bg-white opacity-50 w-auto mx-2 rounded-md" />
+      <Space />
       <SidebarIcon
         icon={<SiDungeonsanddragons size={36} />}
         tooltip="5e Character sheet generator"
