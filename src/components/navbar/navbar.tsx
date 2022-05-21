@@ -63,7 +63,7 @@ export const Navbar: Component = () => {
       <SidebarIcon
         icon={<SiDungeonsanddragons size={36} />}
         tooltip="5e Character sheet generator"
-        route="/Chargen"
+        route="/chargen"
       />
       <SidebarIcon
         icon={<BiMath size={36} />}
