@@ -5,26 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "yarn dev",
-      "name": "Server",
+      "type": "pwa-chrome",
       "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "type": "firefox",
-      "request": "launch",
-      "name": "Browser",
+      "name": "Launch Chrome against localhost",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/app"
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Start server and browser",
-      "configurations": [
-        "Server",
-        "Browser"
-      ]
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }
