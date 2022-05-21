@@ -12,7 +12,7 @@ const whiteBar = {
 
 const square = {
   y: 'rounded-xl text-white bg-green-600',
-  n: '',
+  n: 'rounded-3xl text-green-500 bg-gray-800',
 };
 
 const SidebarIcon: Component<{
@@ -26,7 +26,7 @@ const SidebarIcon: Component<{
   return (
     <div class="relative">
       <div
-        class={`peer flex items-center cursor-pointer justify-center h-20 w-20 my-2 mx-auto shadow-lg bg-gray-800 text-green-500 rounded-3xl
+        class={`peer flex items-center cursor-pointer justify-center h-20 w-20 my-2 mx-auto shadow-lg  
         hover:bg-green-600 hover:text-white hover:rounded-xl 
         ${square[pathname() === props.route ? 'y' : 'n']} 
         active:translate-y-1 
@@ -46,7 +46,7 @@ const SidebarIcon: Component<{
         {props.tooltip}
       </span>
       <span
-        class={`absolute origin-center bg-white h-6 w-2 rounded-md -left-2 top-9
+        class={`absolute origin-center bg-white h-6 w-2 rounded-md top-9
         peer-hover:-left-1
         peer-active:scale-y-[2]
         ${pathname() === props.route ? whiteBar.y : whiteBar.n}
