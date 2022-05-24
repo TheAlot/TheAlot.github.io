@@ -7,3 +7,5 @@ extends:
   - prettier
 ignorePatterns:
   - "*.js"
+env:
+  node: true

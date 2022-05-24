@@ -9,6 +9,12 @@
     "jsxImportSource": "solid-js",
     "noEmit": true,
     "isolatedModules": true,
-    "strict": true
-  }
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "_components/*": ["src/components/*"],
+      "_pages/*": ["src/pages/*"]
+    }
+  },
+  "exclude": ["node_modules", "vite.config.ts"]
 }
