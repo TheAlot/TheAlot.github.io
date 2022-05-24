@@ -9,24 +9,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2.2.1
-        with:
-          version: 7.1.2
-
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
-          cache: pnpm
+          cache: yarn
 
       - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Build
-        run: pnpm build
+        run: yarn build
 
       - name: Deploy with gh-pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          pnpm deploy -u "github-actions-bot <support+actions@github.com>"
+          yarn deploy -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
