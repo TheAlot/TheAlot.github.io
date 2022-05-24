@@ -1,6 +1,7 @@
 import { Component } from 'solid-js';
 import { BsGear } from 'solid-icons/bs';
 import { useNavigate } from 'solid-app-router';
+import Awesomebutton from '_components/awesomebutton';
 
 const Home: Component = () => {
   const navigation = useNavigate();
@@ -42,6 +43,7 @@ const Home: Component = () => {
         >
           Killer Sudoku Helper (WIP)
         </button>
+        <Awesomebutton title="AwesomeButton" loading={false} />
       </div>
     </div>
   );
