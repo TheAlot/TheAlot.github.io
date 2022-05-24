@@ -1,6 +1,8 @@
 button {
   transform-style: preserve-3d;
+  --webkit-font-smoothing: preserve; 
   background-color: var(--color);
+  color: var(--color-light);
   cursor: pointer;
   &.middle {
     &:hover {

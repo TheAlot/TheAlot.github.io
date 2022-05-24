@@ -13,7 +13,8 @@
     "baseUrl": ".",
     "paths": {
       "_components/*": ["src/components/*"],
-      "_pages/*": ["src/pages/*"]
+      "_pages/*": ["src/pages/*"],
+      "_utils/*": ["src/utils/*"]
     }
   },
   "exclude": ["node_modules", "vite.config.ts"]

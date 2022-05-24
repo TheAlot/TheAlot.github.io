@@ -9,3 +9,4 @@ ignorePatterns:
   - "*.js"
 env:
   node: true
+  jest: true

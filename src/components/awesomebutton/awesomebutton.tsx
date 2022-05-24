@@ -83,6 +83,7 @@ const AwesomeButton: Component<{
           'font-size': props.fontSize,
           position: 'relative',
           bottom: '5px',
+          '--color-light': props.colors.colorLight,
           '--color-active': props.colors.colorDark,
           '--color-hover': props.colors.colorHover,
           '--color-disabled': props.colors.disabled,
