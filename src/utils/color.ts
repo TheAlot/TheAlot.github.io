@@ -1,188 +1,67 @@
-const colorNames = [
-  'AliceBlue',
-  'AntiqueWhite',
-  'Aqua',
-  'Aquamarine',
-  'Azure',
-  'Beige',
-  'Bisque',
-  'Black',
-  'BlanchedAlmond',
-  'Blue',
-  'BlueViolet',
-  'Brown',
-  'BurlyWood',
-  'CadetBlue',
-  'Chartreuse',
-  'Chocolate',
-  'Coral',
-  'CornflowerBlue',
-  'Cornsilk',
-  'Crimson',
-  'Cyan',
-  'DarkBlue',
-  'DarkCyan',
-  'DarkGoldenRod',
-  'DarkGray',
-  'DarkGrey',
-  'DarkGreen',
-  'DarkKhaki',
-  'DarkMagenta',
-  'DarkOliveGreen',
-  'DarkOrange',
-  'DarkOrchid',
-  'DarkRed',
-  'DarkSalmon',
-  'DarkSeaGreen',
-  'DarkSlateBlue',
-  'DarkSlateGray',
-  'DarkSlateGrey',
-  'DarkTurquoise',
-  'DarkViolet',
-  'DeepPink',
-  'DeepSkyBlue',
-  'DimGray',
-  'DimGrey',
-  'DodgerBlue',
-  'FireBrick',
-  'FloralWhite',
-  'ForestGreen',
-  'Fuchsia',
-  'Gainsboro',
-  'GhostWhite',
-  'Gold',
-  'GoldenRod',
-  'Gray',
-  'Grey',
-  'Green',
-  'GreenYellow',
-  'HoneyDew',
-  'HotPink',
-  'IndianRed',
-  'Indigo',
-  'Ivory',
-  'Khaki',
-  'Lavender',
-  'LavenderBlush',
-  'LawnGreen',
-  'LemonChiffon',
-  'LightBlue',
-  'LightCoral',
-  'LightCyan',
-  'LightGoldenRodYellow',
-  'LightGray',
-  'LightGrey',
-  'LightGreen',
-  'LightPink',
-  'LightSalmon',
-  'LightSeaGreen',
-  'LightSkyBlue',
-  'LightSlateGray',
-  'LightSlateGrey',
-  'LightSteelBlue',
-  'LightYellow',
-  'Lime',
-  'LimeGreen',
-  'Linen',
-  'Magenta',
-  'Maroon',
-  'MediumAquaMarine',
-  'MediumBlue',
-  'MediumOrchid',
-  'MediumPurple',
-  'MediumSeaGreen',
-  'MediumSlateBlue',
-  'MediumSpringGreen',
-  'MediumTurquoise',
-  'MediumVioletRed',
-  'MidnightBlue',
-  'MintCream',
-  'MistyRose',
-  'Moccasin',
-  'NavajoWhite',
-  'Navy',
-  'OldLace',
-  'Olive',
-  'OliveDrab',
-  'Orange',
-  'OrangeRed',
-  'Orchid',
-  'PaleGoldenRod',
-  'PaleGreen',
-  'PaleTurquoise',
-  'PaleVioletRed',
-  'PapayaWhip',
-  'PeachPuff',
-  'Peru',
-  'Pink',
-  'Plum',
-  'PowderBlue',
-  'Purple',
-  'RebeccaPurple',
-  'Red',
-  'RosyBrown',
-  'RoyalBlue',
-  'SaddleBrown',
-  'Salmon',
-  'SandyBrown',
-  'SeaGreen',
-  'SeaShell',
-  'Sienna',
-  'Silver',
-  'SkyBlue',
-  'SlateBlue',
-  'SlateGray',
-  'SlateGrey',
-  'Snow',
-  'SpringGreen',
-  'SteelBlue',
-  'Tan',
-  'Teal',
-  'Thistle',
-  'Tomato',
-  'Turquoise',
-  'Violet',
-  'Wheat',
-  'White',
-  'WhiteSmoke',
-  'Yellow',
-  'YellowGreen',
-];
+import { colorNames } from './colorNames';
 
-export function toHsl(color: string): string {
-  const firstThree = color.slice(0, 3).toUpperCase();
-  if (firstThree === 'RGB') return rgbToHsl(color);
-  if (firstThree === 'HSL') return color;
-  if (firstThree === 'HWB') return hwbToHsl(color);
-  if (firstThree === 'CMY') return cmykToHsl(color);
-  const first = color[0];
-  const second = color[1];
-  if (first === '#') return hexToHsl(color);
-  if (
-    /(R|Y|G|C|B|M|W)/.test(first) &&
-    !Number.isNaN(second) &&
-    color.length === 6 &&
-    color.indexOf(',') !== -1
-  ) {
-    return ncolToHsl(color);
-  }
-  if (colorNames.includes(color)) return nameToHsl(color);
-  console.log(
-    'Unknown color string provided',
-    firstThree,
-    first,
-    second,
-    color,
-  );
-  return 'hsl(0, 0%, 100%)';
+interface Hsl {
+  h: number;
+  s: number;
+  l: number;
 }
 
-function rgbToHsl(color: string): string {
+export function toHsl(color: string): string {
+  let h = 0;
+  let s = 0;
+  let l = 1;
+  const firstThree = color.slice(0, 3).toUpperCase();
+  if (firstThree === 'RGB') {
+    const [r, g, b] = color
+      .replaceAll(/(r|g|b|\(|\)| )/gi, '')
+      .split(',')
+      .map(value => parseInt(value));
+    ({ h, s, l } = rgbToHsl(r, g, b));
+  }
+  if (firstThree === 'HSL') return color;
+  if (firstThree === 'HWB') {
+    const [hue, white, black] = color
+      .replaceAll(/(h|w|b|\(|\)| |%)/gi, '')
+      .split(',')
+      .map(value => parseInt(value));
+    ({ h, s, l } = hwbToHsl(hue, white / 100, black / 100));
+  }
+  if (firstThree === 'CMY') {
+    const [c, m, y, k] = color
+      .replaceAll(/(cmyk|\(|\)| |%)/gi, '')
+      .split(',')
+      .map(value => parseInt(value) / 100);
+    ({ h, s, l } = cmykToHsl(c, m, y, k));
+  }
+  const first = color[0];
+  const second = color[1];
+  if (first === '#') {
+    ({ h, s, l } = hexToHsl(color));
+  }
+  if (
+    /(R|Y|G|C|B|M|W)/.test(first) &&
+    !Number.isNaN(parseInt(second)) &&
+    color.indexOf(',') !== -1
+  ) {
+    const [ncol, white, black] = color.replaceAll(/(| |%)/gi, '').split(',');
+    ({ h, s, l } = ncolToHsl(
+      ncol,
+      parseInt(white) / 100,
+      parseInt(black) / 100,
+    ));
+  }
+  if (colorNames[color.toLowerCase()])
+    ({ h, s, l } = hexToHsl(colorNames[color.toLowerCase()]));
+  return `hsl(${Math.round(h)}, ${Math.round(s * 100)}%, ${Math.round(
+    l * 100,
+  )}%)`;
+}
+
+function rgbToHsl(r: number, g: number, b: number): Hsl {
   let h = 0;
   let l = 0;
   let s = 0;
-  const [r, g, b] = color.replaceAll(/(r|g|b|\(|\)| )/gi, '').split(',');
-  const rgb = [Number(r) / 255, Number(g) / 255, Number(b) / 255];
+  const rgb = [r / 255, g / 255, b / 255];
   let min = rgb[0];
   let max = rgb[0];
   let maxcolor = 0;
@@ -217,33 +96,104 @@ function rgbToHsl(color: string): string {
       s = (max - min) / (2 - max - min);
     }
   }
-  return `hsl(${h}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+  return { h, s, l };
 }
 
-function hwbToHsl(color: string): string {
-  // let newH = 0;
-  // let s = 0;
-  // let l = 0;
-  // const [h, w, b] = color.replaceAll(/(h|w|b|\(|\)| )/gi, '').split(',');
-  return color;
+function hwbToHsl(hue: number, white: number, black: number): Hsl {
+  const hslRgb = hslToRgb(hue, 1, 0.5);
+  const hwbRgb = [hslRgb.r / 255, hslRgb.g / 255, hslRgb.b / 255];
+  const tot = white + black;
+  if (tot > 1) {
+    white = Number((white / tot).toFixed(2));
+    black = Number((black / tot).toFixed(2));
+  }
+  const [r, g, b] = hwbRgb.map(value => {
+    let val = value;
+    val *= 1 - white - black;
+    val += white;
+    return Number(val * 255);
+  });
+  return rgbToHsl(r, g, b);
 }
 
-function cmykToHsl(color: string): string {
-  console.log('cmykToHsl', color);
-  return color;
+function cmykToHsl(c: number, m: number, y: number, k: number): Hsl {
+  const rgb = {
+    r: Math.round(255 - Math.min(1, c * (1 - k) + k) * 255),
+    g: Math.round(255 - Math.min(1, m * (1 - k) + k) * 255),
+    b: Math.round(255 - Math.min(1, y * (1 - k) + k) * 255),
+  };
+  return rgbToHsl(rgb.r, rgb.g, rgb.b);
 }
 
-function hexToHsl(color: string): string {
-  console.log('hextToHsl', color);
-  return color;
+function ncolToHsl(ncol: string, white: number, black: number): Hsl {
+  const letter = ncol[0].toUpperCase();
+  let h = 0;
+  let percent: string | number = ncol.substring(1);
+  if (percent == '') {
+    percent = 0;
+  }
+  percent = Number(percent);
+  if (isNaN(percent)) {
+    percent = 0;
+  }
+  if (letter == 'R') {
+    h = 0 + percent * 0.6;
+  }
+  if (letter == 'Y') {
+    h = 60 + percent * 0.6;
+  }
+  if (letter == 'G') {
+    h = 120 + percent * 0.6;
+  }
+  if (letter == 'C') {
+    h = 180 + percent * 0.6;
+  }
+  if (letter == 'B') {
+    h = 240 + percent * 0.6;
+  }
+  if (letter == 'M') {
+    h = 300 + percent * 0.6;
+  }
+  if (letter == 'W') {
+    h = 0;
+    white = 1 - percent / 100;
+    black = percent / 100;
+  }
+
+  return hwbToHsl(h, white, black);
 }
 
-function ncolToHsl(color: string): string {
-  console.log('ncolToHsl', color);
-  return color;
+function hexToHsl(hex: string): Hsl {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return rgbToHsl(r, g, b);
 }
 
-function nameToHsl(color: string): string {
-  console.log('nameToHsl', color);
-  return color;
+/**
+ * @param hue value between 0 and 360
+ * @param sat value between 0 and 1
+ * @param light value between 0 and 1
+ */
+function hslToRgb(
+  hue: number,
+  sat: number,
+  light: number,
+): { r: number; g: number; b: number } {
+  hue = hue / 60;
+  const t2 = light <= 0.5 ? light * (sat + 1) : light + sat - light * sat;
+  const t1 = light * 2 - t2;
+  const r = hueToRgb(t1, t2, hue + 2) * 255;
+  const g = hueToRgb(t1, t2, hue) * 255;
+  const b = hueToRgb(t1, t2, hue - 2) * 255;
+  return { r, g, b };
+}
+
+function hueToRgb(t1: number, t2: number, hue: number): number {
+  if (hue < 0) hue += 6;
+  if (hue >= 6) hue -= 6;
+  if (hue < 1) return (t2 - t1) * hue + t1;
+  else if (hue < 3) return t2;
+  else if (hue < 4) return (t2 - t1) * (4 - hue) + t1;
+  else return t1;
 }
