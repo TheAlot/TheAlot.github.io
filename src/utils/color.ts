@@ -6,6 +6,18 @@ interface Hsl {
   l: number;
 }
 
+export function changeBrightness(color: string, amount: number): string {
+  const hsl = toHsl(color);
+  const [h, s, l] = hsl
+    .replaceAll(/hsl\(| |\)|%/gi, '')
+    .split(',')
+    .map(Number);
+  let newL = l + amount;
+  if (newL < 0) newL = 0;
+  if (newL > 100) newL = 100;
+  return `hsl(${h}, ${s}%, ${newL}%)`;
+}
+
 export function toHsl(color: string): string {
   let h = 0;
   let s = 0;
